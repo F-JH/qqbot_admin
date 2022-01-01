@@ -22,7 +22,10 @@ const routes = [
     component: index,
     meta: {
       requireAuth: true
-    }
+    },
+    children: [
+      {path:'config', name:'配置', component:Home}
+    ]
   },
   {
     path: '/about',

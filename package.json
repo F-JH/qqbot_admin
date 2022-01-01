@@ -14,6 +14,8 @@
     "core-js": "^3.6.5",
     "html-webpack-plugin": "^5.5.0",
     "live-server": "^1.2.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.4",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2",

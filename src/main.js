@@ -4,6 +4,7 @@ import router from './router'
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import { createStore } from "vuex";
+import axios from './axiosConfig/config';
 const config = require('../static/config/config');
 
 const store = createStore({
@@ -55,4 +56,6 @@ router.beforeEach((to, from, next)=>{
     }
 });
 
-const vm = createApp(App).use(Antd).use(store).use(router).mount('#app');
+const app = createApp(App);
+app.config.globalProperties.$axios = axios(router);
+const vm = app.use(Antd).use(store).use(router).mount('#app');

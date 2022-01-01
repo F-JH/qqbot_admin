@@ -71,8 +71,9 @@ export default {
       }
       axios.post(loginUrl, this.loginForm).then(res=>{
         this.logining = false;
-        if(res.data.status === 200){
-          localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo));
+        console.log('login success');
+        if(res.data.code === 200){
+          localStorage.setItem('userInfo', JSON.stringify(res.data.moreInfo));
           this.$router.push('/index');
         }
       });

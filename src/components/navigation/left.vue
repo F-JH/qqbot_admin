@@ -1,32 +1,54 @@
 <template>
-  <a-menu theme="dark" mode="inline" style="font-size: large">
-    <a-sub-menu theme="dark">
-      <template #icon><message-outlined /></template>
-      <template #title>撤回消息</template>
-      <a-menu-item @click="test">群组设置</a-menu-item>
+  <a-menu theme="dark" mode="inline" class="menu-left">
+    <a-sub-menu v-for="submenu in navigation.data" theme="dark">
+      <template #icon><Icon :icon="submenu.icon"></Icon></template>
+      <template #title>{{submenu.menuname}}</template>
+      <a-menu-item v-for="menuitem in submenu.menus">
+        <template #icon><Icon :icon="menuitem.icon"/></template>
+        <router-link :to="menuitem.url">{{menuitem.menuname}}</router-link>
+      </a-menu-item>
     </a-sub-menu>
   </a-menu>
 </template>
 
 <script>
-import { MessageOutlined } from '@ant-design/icons-vue';
-import axios from "axios";
+import { Icon } from '../../antd/antdvIcons';
+import { reactive } from 'vue';
+import { message } from 'ant-design-vue';
 
 export default {
   name: "",
   components: {
-    MessageOutlined
+    Icon
+  },
+  setup(){
+    const iconPath = '@ant-design/icons-vue/';
+    const navigation = reactive({
+      data: [],
+      name: ''
+    });
+    return { iconPath, navigation }
   },
   methods: {
-    test(){
-      axios.get('/api/getIndex').then(res=>{
-        console.log(res.data);
-      });
-    }
+  },
+  created() {
+    this.$axios.post('/api/config').then(res=>{
+      if(res.data.code == 1002){
+        this.navigation.data = res.data.resultData;
+      }else{
+        if(res.data.message){
+          message.error(res.data.message);
+        }
+      }
+    });
   }
 }
 </script>
 
 <style scoped>
-
+.menu-left{
+  /*font-size: large;*/
+  border-top: #eaeaea;
+  border-top-width: 1px;
+}
 </style>
